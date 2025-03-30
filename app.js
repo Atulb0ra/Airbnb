@@ -47,14 +47,18 @@ app.get("/listings/:id", async(req, res) =>{
 })
 
 // create Route
-app.post("/listings", async (req, res) => {
+app.post("/listings", async (req, res, next) => {
     // let {title, description, image, price, location, country} = req.body  
     // METHOD -1 when name is these field
 
     // Method -2 when we pass object of fields
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
+    try{
+        const newListing = new Listing(req.body.listing);
+        await newListing.save();
+        res.redirect("/listings");
+    }catch(err){
+        next(err);
+    }
 })
 
 //Edit Route
@@ -91,6 +95,10 @@ app.delete("/listings/:id", async (req, res) => {
 //     console.log("Sample was saved")
 //     res.send("Sample listing saved");
 // });
+
+app.use((err, req, res, next) =>{
+    res.send("Something went wrong");
+})
 
 app.listen(8080, () => {
     console.log("Server is listening to port 8080")
