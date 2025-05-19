@@ -9,7 +9,7 @@
             <!-- row-cols-1 for more small sizes -->
             <% for(let listing of allListings){ %>
                 <a class = "listing-link" href="/listings/<%= listing._id%>">
-                    <div class="card col">
+                    <div class="card col listing-card">
                         <!-- style="width: 20rem;" if u want u can add it in above div -->
                         <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
                         <div class="card-img-overlay">Airbnb</div>
