@@ -7,6 +7,7 @@ const Listing = require("../models/listing.js");
 
 
 const validateListing = (req, res, next) =>{
+    // console.log('Incoming request body:', req.body);
     let {error} = listingSchema.validate(req.body);
     if(error){
         let errMsg = error.details.map((el) => el.message).join(",");
