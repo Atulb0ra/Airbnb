@@ -33,6 +33,10 @@ router.get("/new", (req,res) =>{
 router.get("/:id", wrapAsync(async(req, res) =>{
     const {id} = req.params;
     const listing = await Listing.findById(id).populate("reviews");
+    if(!listing){
+        req.flash("error", "Listing not found");
+        res.redirect("/listings");
+    }
     res.render("listings/show.ejs", {listing});
 }));
 
@@ -65,6 +69,7 @@ router.post("/",validateListing, wrapAsync(async (req, res, next) => {
     //     throw new ExpressError(400, "location is missing");
     // }
     await newListing.save();
+    req.flash("success", "Successfully created a new listing");
     res.redirect("/listings");
 }));
 
@@ -72,6 +77,10 @@ router.post("/",validateListing, wrapAsync(async (req, res, next) => {
 router.get("/:id/edit", wrapAsync(async (req, res) => {
     const {id} = req.params;
     const listing = await Listing.findById(id);
+    if(!listing){
+        req.flash("error", "Listing not found");
+        res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", {listing});
 }));
 
@@ -80,6 +89,7 @@ router.put("/:id",validateListing, wrapAsync(async (req, res) => {
     const {id} = req.params;
     const updatedListing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
     // res.redirect("/listings/" + id);  METHOD _1
+    req.flash("success", "Successfully updated a listing");
     res.redirect(`/listings/${id}`); // METHOD _2
 }));
 
@@ -87,6 +97,7 @@ router.put("/:id",validateListing, wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     const {id} = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "Successfully deleted a listing");
     res.redirect("/listings");
 }));
 
