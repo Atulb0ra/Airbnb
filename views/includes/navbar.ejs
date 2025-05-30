@@ -6,11 +6,19 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav mt-1">
-          <!-- here it add mt-1 extra if want to remove remove it not in lecture -->
+        <div class="navbar-nav">
           <a class="nav-link"href="/">Home</a>
           <a class="nav-link" href="/listings">All Listings</a>
           <a class="nav-link" href="/listings/new">Add new Listings</a>
+        </div>
+        <div class="navbar-nav ms-auto">
+          <% if(!currUser) { %>
+             <a class="nav-link"href="/signup">Sign Up</a>
+             <a class="nav-link" href="/login">Log in</a>
+          <% } %>
+          <% if(currUser) { %>
+              <a class="nav-link" href="/logout">Log out</a>
+          <% } %>
         </div>
       </div>
     </div>
