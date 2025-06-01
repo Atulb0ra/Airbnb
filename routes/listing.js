@@ -60,6 +60,7 @@ router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res, next) =
     //     throw new ExpressError(400, "Invalid listing data");
     // }
     const newListing = new Listing(req.body.listing);
+    console.log(req.user);
     newListing.owner = req.user._id;
     // Schema validation
     // if(!newListing.description){
