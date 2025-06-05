@@ -12,7 +12,7 @@ router.route("/")
     // Index Route
     .get(wrapAsync(listingController.index))
     // create Route
-    .post(isLoggedIn, validateListing, upload.single("listing[image]"), wrapAsync(listingController.createListing));
+    .post(isLoggedIn, upload.single("listing[image]"), validateListing, wrapAsync(listingController.createListing));
     
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
@@ -21,7 +21,7 @@ router.route("/:id")
     // show Route
     .get(wrapAsync(listingController.showListing))
     // update route
-    .put(isLoggedIn, isOwner, validateListing, wrapAsync(listingController.updateListing))
+    .put(isLoggedIn, isOwner, upload.single("listing[image]"), validateListing, wrapAsync(listingController.updateListing))
     // Delete Route
     .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
